@@ -31,8 +31,9 @@ def insert_term(term, definition):
 
 # --- Eliminar términos ---
 def delete_terms(terminos):
-    for term in terminos:
-        session.sql(f"DELETE FROM glosario WHERE termino = '{term}'").collect()
+    placeholders = ','.join(['%s'] * len(terminos))
+    query = f"DELETE FROM glosario WHERE termino IN ({placeholders})"
+    session.sql(query, params=terminos).collect()
 
 # --- Estado para detalle ---
 if "modo_detalle" not in st.session_state:
