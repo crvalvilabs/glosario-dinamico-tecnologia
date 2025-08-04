@@ -40,7 +40,7 @@ with col1:
     st.markdown("### Términos")
     for term in st.session_state.glossary:
         clicked = st.markdown(
-            f'<div class="term-link" onclick="window.location.href='#{term}'">{term}</div>',
+            f"<div class='term-link' onclick=\"window.location.href='#{term}'\">{term}</div>",
             unsafe_allow_html=True
         )
         if st.query_params.get("term") == term:
