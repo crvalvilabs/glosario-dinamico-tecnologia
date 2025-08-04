@@ -33,6 +33,12 @@ def load_glosario(dummy=0):
         st.exception(e)
         return pd.DataFrame(columns=["termino", "definicion"])
 
+# --- Validación de existencia de un término
+def validate_term(term):
+    query = f"SELECT 1 FROM GLOSARIO_DB.PUBLIC.GLOSARIO WHERE TERMINO = '{term}'"
+    result = session.sql(query).collect()
+    return len(result) > 0
+    
 # --- Insertar nuevo término (seguro con Snowpark) ---
 def insert_term(term, definition):
     df = session.create_dataframe([[term, definition]], schema=["termino", "definicion"])
@@ -103,6 +109,11 @@ with tab2:
         nueva_definicion = st.text_area("📝 Definición", placeholder="Escribe una definición clara y breve del término...", key="nueva_definicion_input")
         guardar = st.form_submit_button("💾 Guardar término")
 
+        is_exist = validate_term(nuevo_termino.strip())
+        if is_exist:
+            st.error("⛔ El término ya existe.")
+            return
+
         if guardar:
             if nuevo_termino.strip() and nueva_definicion.strip():
                 insert_term(nuevo_termino.strip(), nueva_definicion.strip())
@@ -123,7 +134,7 @@ with tab3:
         seleccion = st.multiselect("Selecciona término(s) a eliminar:", opciones)
 
         if seleccion:
-            confirmar = st.button("⛔ Eliminar término(s) seleccionados")
+            confirmar = st.button("❌ Eliminar término(s) seleccionados")
             if confirmar:
                 delete_terms(seleccion)
                 st.success(f"✅ '{nuevo_termino}' eliminado correctamente.")
@@ -135,6 +146,6 @@ with tab3:
 st.markdown("""
 <hr style='margin-top: 4rem;'>
 <div style='text-align:center; color:#6c757d; font-size:0.9rem;'>
-    Developed by 🤖 <strong>IA Visionaria 2025</strong>
+    Developed by <strong>IA Visionaria 2025</strong>
 </div>
 """, unsafe_allow_html=True)
