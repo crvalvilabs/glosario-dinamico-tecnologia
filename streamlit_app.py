@@ -124,3 +124,10 @@ with tab3:
                 st.session_state.glosario_version += 1
                 st.rerun()
 
+# --- Footer ---
+st.markdown("<hr>", unsafe_allow_html=True)
+st.markdown(
+    "<p style='text-align:center; font-size:14px; color:gray;'>Developed by <strong>IA Visionaria 2025</strong></p>",
+    unsafe_allow_html=True
+)
+
