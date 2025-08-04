@@ -92,15 +92,23 @@ with tab2:
     modo = st.radio("Selecciona una acción:", ["➕ Añadir", "🗑 Eliminar"], horizontal=True)
 
     if modo == "➕ Añadir":
-        with st.form("form_add_term"):
-            nuevo_termino = st.text_input("Término")
-            nueva_definicion = st.text_area("Definición")
-            guardar = st.form_submit_button("💾 Guardar término")
+        if "nuevo_termino" not in st.session_state:
+            st.session_state.nuevo_termino = ""
+        if "nueva_definicion" not in st.session_state:
+            st.session_state.nueva_definicion = ""
 
+        with st.form("form_add_term"):
+            nuevo_termino = st.text_input("Término", value=st.session_state.nuevo_termino, key="nuevo_termino_input")
+            nueva_definicion = st.text_area("Definición", value=st.session_state.nueva_definicion, key="nueva_definicion_input")
+            guardar = st.form_submit_button("💾 Guardar término")
+    
             if guardar:
                 if nuevo_termino.strip() and nueva_definicion.strip():
                     insert_term(nuevo_termino.strip(), nueva_definicion.strip())
                     st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
+                    # Limpiar inputs
+                    st.session_state.nuevo_termino = ""
+                    st.session_state.nueva_definicion = ""
                     load_glosario.clear()
                     st.rerun()
                 else:
@@ -117,3 +125,4 @@ with tab2:
                 delete_terms(seleccion)
                 st.success("✅ Término(s) eliminado(s) correctamente.")
                 load_glosario.clear()
+                st.rerun()
