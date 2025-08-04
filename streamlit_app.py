@@ -18,17 +18,15 @@ st.markdown(
     """
     <style>
         .block-container { padding-top: 2rem; }
-        .term-button {
-            background: none;
-            border: none;
+        .term-link {
             color: #3366cc;
-            text-align: left;
-            padding: 0.5rem 0;
             cursor: pointer;
+            padding: 0.4rem 0;
+            display: block;
         }
-        .term-button:hover {
-            color: #003366;
+        .term-link:hover {
             text-decoration: underline;
+            color: #003366;
         }
     </style>
     """,
@@ -41,7 +39,11 @@ col1, col2 = st.columns([1, 2])
 with col1:
     st.markdown("### Términos")
     for term in st.session_state.glossary:
-        if st.button(term, key=f"btn_{term}"):
+        clicked = st.markdown(
+            f'<div class="term-link" onclick="window.location.href='#{term}'">{term}</div>',
+            unsafe_allow_html=True
+        )
+        if st.query_params.get("term") == term:
             st.session_state.selected_term = term
 
 with col2:
@@ -74,3 +76,4 @@ with col2:
     if selected:
         st.markdown(f"### Definición de: {selected}")
         st.info(st.session_state.glossary[selected])
+
