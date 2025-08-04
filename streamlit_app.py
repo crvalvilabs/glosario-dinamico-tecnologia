@@ -67,7 +67,7 @@ with tab1:
             st.rerun()
 
     else:
-        search = st.text_input("🔍 Buscar término:")
+        search = st.text_input(label="🔍 Buscar término:", placeholder="Ej: microprocesador, dato, hardware...")
 
         filtered = data[data["TERMINO"].str.contains(search, case=False, na=False)] if search.strip() else data
 
@@ -100,8 +100,8 @@ with tab2:
     st.subheader("📄 Añadir término al glosario")
 
     with st.form("form_add_term"):
-        nuevo_termino = st.text_input("Término", key="nuevo_termino_input")
-        nueva_definicion = st.text_area("Definición", key="nueva_definicion_input")
+        nuevo_termino = st.text_input("📘 Nombre del nuevo término", placeholder="Ej: Inteligencia Artificial", key="nuevo_termino_input")
+        nueva_definicion = st.text_area(""📝 Definición", placeholder="Escribe una definición clara y breve del término...", key="nueva_definicion_input")
         guardar = st.form_submit_button("💾 Guardar término")
 
         if guardar:
@@ -112,7 +112,7 @@ with tab2:
                 st.session_state.glosario_version += 1
                 st.rerun()
             else:
-                st.warning("❌ Ambos campos son obligatorios.")
+                st.warning("⚠️ Por favor completa ambos campos.")
                 
 
 # === TAB 3: Eliminar términos ===
@@ -124,7 +124,7 @@ with tab3:
         seleccion = st.multiselect("Selecciona término(s) a eliminar:", opciones)
 
         if seleccion:
-            confirmar = st.button("🗑 Eliminar término(s) seleccionados")
+            confirmar = st.button("⛔ Eliminar término(s) seleccionados")
             if confirmar:
                 delete_terms(seleccion)
                 st.success(f"✅ '{nuevo_termino}' eliminado correctamente.")
