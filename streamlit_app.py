@@ -109,8 +109,7 @@ with tab2:
                 st.error("❌ Ambos campos son obligatorios.")
 
 # === TAB 3: Eliminar términos ===
-with tab3:modo == "❌ Eliminar":
-    
+with tab3:
         st.subheader("🗑️ Eliminar término del glosario")
         data = load_glosario()
         opciones = data["TERMINO"].tolist()
