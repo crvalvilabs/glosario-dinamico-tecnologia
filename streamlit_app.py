@@ -12,22 +12,15 @@ if "glossary" not in st.session_state:
         "Microcontrolador": "Chip con CPU, memoria y periféricos integrados."
     }
 
+if "selected_term" not in st.session_state:
+    st.session_state.selected_term = "Dato"
+
 st.set_page_config(layout="wide", page_title="Glosario Streamlit")
 
 st.markdown(
     """
     <style>
         .block-container { padding-top: 2rem; }
-        .term-link {
-            color: #3366cc;
-            cursor: pointer;
-            padding: 0.4rem 0;
-            display: block;
-        }
-        .term-link:hover {
-            text-decoration: underline;
-            color: #003366;
-        }
     </style>
     """,
     unsafe_allow_html=True,
@@ -39,11 +32,7 @@ col1, col2 = st.columns([1, 2])
 with col1:
     st.markdown("### Términos")
     for term in st.session_state.glossary:
-        clicked = st.markdown(
-            f"<div class='term-link' onclick=\"window.location.href='#{term}'\">{term}</div>",
-            unsafe_allow_html=True
-        )
-        if st.query_params.get("term") == term:
+        if st.button(term, key=f"term_{term}"):
             st.session_state.selected_term = term
 
 with col2:
@@ -67,6 +56,7 @@ with col2:
         if submitted:
             if new_term and new_def:
                 st.session_state.glossary[new_term] = new_def
+                st.session_state.selected_term = new_term
                 st.success(f"Término '{new_term}' agregado correctamente.")
             else:
                 st.error("Por favor, complete ambos campos.")
@@ -76,4 +66,3 @@ with col2:
     if selected:
         st.markdown(f"### Definición de: {selected}")
         st.info(st.session_state.glossary[selected])
-
