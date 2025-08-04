@@ -36,10 +36,12 @@ def insert_term(term, definition):
 def delete_terms(terminos):
     if not terminos:
         return
-    df_temp = session.create_dataframe([[t] for t in terminos], schema=["termino"])
-    session.table("glosario") \
-        .join(df_temp, df_temp["termino"] == col("termino")) \
-        .delete()
+    df_temp = session.create_dataframe([[t] for t in terminos], schema=["termino_borrar"])
+
+    glosario = session.table("glosario")
+    join_df = glosario.join(df_temp, glosario["termino"] == df_temp["termino_borrar"])
+
+    join_df.delete()
 
 # --- Estado para vista de detalle ---
 if "modo_detalle" not in st.session_state:
