@@ -26,7 +26,7 @@ def insert_term(term, definition):
 # Función para eliminar términos
 def delete_terms(terminos):
     for term in terminos:
-        session.sql(f"DELETE FROM glosario WHERE termino = %s", params=[term]).collect()
+        session.sql(f"DELETE FROM glosario WHERE termino = :1", params=[term]).collect()
 
 # Función para resetear inputs
 def reset_inputs(keys: list[str]):
