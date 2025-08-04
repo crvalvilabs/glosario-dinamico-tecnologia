@@ -67,7 +67,7 @@ with tab1:
         st.markdown(f"#### {st.session_state.detalle_termino}")
         st.markdown(f"<p style='text-align:justify;'>{st.session_state.detalle_definicion}</p>", unsafe_allow_html=True)
 
-        if st.button("🔙 Volver", type="primary"):
+        if st.button("🔙 Volver", type="secondary"):
             st.session_state.modo_detalle = False
             st.rerun()
 
@@ -94,7 +94,7 @@ with tab1:
                         """,
                         unsafe_allow_html=True
                     )
-                    if st.button("Ver más", key=f"vermas_{idx}", type="primary"):
+                    if st.button("Ver más", key=f"vermas_{idx}", type="secondary"):
                         st.session_state.modo_detalle = True
                         st.session_state.detalle_termino = row["TERMINO"]
                         st.session_state.detalle_definicion = row["DEFINICION"]
@@ -133,7 +133,7 @@ with tab3:
         seleccion = st.multiselect("Selecciona término(s) a eliminar:", opciones)
 
         if seleccion:
-            confirmar = st.button("❌ Eliminar término(s) seleccionados", type="primary")
+            confirmar = st.button("❌ Eliminar término(s) seleccionados", type="secondary")
             if confirmar:
                 delete_terms(seleccion)
                 st.success(f"✅ '{nuevo_termino}' eliminado correctamente.")
