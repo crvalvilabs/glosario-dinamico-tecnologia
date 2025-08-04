@@ -3,6 +3,13 @@ import pandas as pd
 from datetime import datetime
 from snowflake.snowpark.functions import col
 
+# --- Cargar CSS externo ---
+def load_local_css(file_path):
+    with open(file_path) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+load_local_css("assets/style.css")
+
 # --- Configuración general ---
 st.set_page_config(page_title="Glosario Tecnológico", layout="wide")
 
@@ -87,7 +94,7 @@ with tab1:
                 with target_col:
                     st.markdown(
                         f"""
-                        <div style='border:1px solid #ddd; border-radius:10px; padding:15px; margin:10px; background-color:#f9f9f9;'>
+                        <div class='card'>
                             <h4>{row["TERMINO"]}</h4>
                             <p>{row["DEFINICION"][:120]}...</p>
                         </div>
