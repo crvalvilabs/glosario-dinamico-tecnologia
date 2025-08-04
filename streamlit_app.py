@@ -67,7 +67,7 @@ with tab1:
         st.markdown(f"#### {st.session_state.detalle_termino}")
         st.markdown(f"<p style='text-align:justify;'>{st.session_state.detalle_definicion}</p>", unsafe_allow_html=True)
 
-        if st.button("🔙 Volver", type="secondary"):
+        if st.button("🔙 Volver", type="tertiary"):
             st.session_state.modo_detalle = False
             st.rerun()
 
