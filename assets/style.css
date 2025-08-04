@@ -35,3 +35,13 @@ button[kind="primary"] {
 button[kind="primary"]:hover {
     background-color: #5F35EF !important;
 }
+
+.glossary-title {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #D16BA5, #86A8E7, #5FFBF1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "Inter", sans-serif;
+}
