@@ -100,12 +100,13 @@ with tab2:
         if guardar:
             if nuevo_termino.strip() and nueva_definicion.strip():
                 insert_term(nuevo_termino.strip(), nueva_definicion.strip())
-                st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
+                st.toast(f"✅ '{nuevo_termino}' fue añadido correctamente.")
                 # load_glosario.clear()
                 st.session_state.glosario_version += 1
                 st.rerun()
             else:
-                st.error("❌ Ambos campos son obligatorios.")
+                st.toast("❌ Ambos campos son obligatorios.")
+                
 
 # === TAB 3: Eliminar términos ===
 with tab3:
@@ -121,7 +122,7 @@ with tab3:
                 delete_terms(seleccion)
                 load_glosario.clear()
                 st.session_state.glosario_version += 1
-                st.success("✅ Término(s) eliminado(s) correctamente.")
+                st.toast(f"✅ '{nuevo_termino}' fue añadido correctamente.")
                 st.rerun()
 
 # --- Footer ---
