@@ -20,11 +20,20 @@ if "glosario_version" not in st.session_state:
 # --- Título ---
 # st.markdown("<h1 style='text-align:center;'>📖 Glosario Tecnológico</h1>", unsafe_allow_html=True)
 # st.markdown("<hr>", unsafe_allow_html=True)
+# Emoji separado
+st.markdown("""
+<div style='text-align:center; font-size: 2.5rem;'>📖</div>
+""", unsafe_allow_html=True)
+
+# Título con degradado
 st.markdown("""
 <div class='glossary-title'>
-    📖 Glosario Tecnológico
+    Glosario Tecnológico
 </div>
 """, unsafe_allow_html=True)
+
+# Línea separadora
+st.markdown("<hr>", unsafe_allow_html=True)
 
 # --- Conexión a Snowflake ---
 @st.cache_resource
