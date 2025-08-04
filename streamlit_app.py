@@ -101,7 +101,7 @@ with tab2:
 
     with st.form("form_add_term"):
         nuevo_termino = st.text_input("📘 Nombre del nuevo término", placeholder="Ej: Inteligencia Artificial", key="nuevo_termino_input")
-        nueva_definicion = st.text_area(""📝 Definición", placeholder="Escribe una definición clara y breve del término...", key="nueva_definicion_input")
+        nueva_definicion = st.text_area("📝 Definición", placeholder="Escribe una definición clara y breve del término...", key="nueva_definicion_input")
         guardar = st.form_submit_button("💾 Guardar término")
 
         if guardar:
