@@ -4,7 +4,7 @@ from datetime import datetime
 from snowflake.snowpark.functions import col
 
 # --- Configuración general ---
-st.set_page_config(page_title="Glosario Dinámico", layout="wide")
+st.set_page_config(page_title="Glosario Tecnológico", layout="wide")
 
 # --- Inicializar contador de versión para forzar recarga del caché ---
 if "glosario_version" not in st.session_state:
