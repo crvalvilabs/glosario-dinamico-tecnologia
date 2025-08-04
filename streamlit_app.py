@@ -23,9 +23,15 @@ session = get_session()
 
 # --- Cargar glosario desde Snowflake con control de versión ---
 @st.cache_data(ttl=300)
+@st.cache_data(ttl=300)
 def load_glosario(dummy=0):
-    df = session.table("glosario").select(col("termino"), col("definicion"))
-    return df.to_pandas()
+    try:
+        df = session.table("glosario").select(col("termino"), col("definicion"))
+        return df.to_pandas()
+    except Exception as e:
+        st.error("❌ Error al cargar datos desde Snowflake.")
+        st.exception(e)
+        return pd.DataFrame(columns=["termino", "definicion"])
 
 # --- Insertar nuevo término (seguro con Snowpark) ---
 def insert_term(term, definition):
