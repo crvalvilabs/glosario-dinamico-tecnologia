@@ -119,7 +119,7 @@ with tab3:
             confirmar = st.button("🗑 Eliminar término(s) seleccionados")
             if confirmar:
                 delete_terms(seleccion)
-                # load_glosario.clear()
+                load_glosario.clear()
                 st.session_state.glosario_version += 1
                 st.success("✅ Término(s) eliminado(s) correctamente.")
                 st.rerun()
