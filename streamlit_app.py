@@ -1,68 +1,118 @@
 import streamlit as st
+import pandas as pd
+from snowflake.snowpark.functions import col
 
-# Simulación de glosario en memoria
-if "glossary" not in st.session_state:
-    st.session_state.glossary = {
-        "Dato": "Unidad mínima de información.",
-        "Información": "Conjunto organizado de datos que tiene sentido.",
-        "Hardware": "Componentes físicos de un sistema informático.",
-        "Telecomunicaciones": "Transmisión de información a distancia.",
-        "Arduino": "Plataforma de hardware libre con microcontrolador.",
-        "Microprocesador": "Unidad central de procesamiento en un chip.",
-        "Microcontrolador": "Chip con CPU, memoria y periféricos integrados."
-    }
+# --- Configuración general ---
+st.set_page_config(page_title="Glosario Dinámico", layout="wide")
 
-if "selected_term" not in st.session_state:
-    st.session_state.selected_term = "Dato"
+# --- Título ---
+st.markdown("<h1 style='text-align:center;'>📘 Glosario Dinámico</h1>", unsafe_allow_html=True)
+st.markdown("<hr>", unsafe_allow_html=True)
 
-st.set_page_config(layout="wide", page_title="Glosario Streamlit")
+# --- Conexión a Snowflake ---
+@st.cache_resource
+def get_session():
+    return st.connection("snowflake").session()
 
-st.markdown(
-    """
-    <style>
-        .block-container { padding-top: 2rem; }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+session = get_session()
 
-# Layout principal
-col1, col2 = st.columns([1, 2])
+# --- Cargar glosario desde Snowflake ---
+@st.cache_data(ttl=60)
+def load_glosario():
+    df = session.table("glosario").select(col("termino"), col("definicion"))
+    return df.to_pandas()
 
-with col1:
-    st.markdown("### Términos")
-    for term in st.session_state.glossary:
-        if st.button(term, key=f"term_{term}"):
-            st.session_state.selected_term = term
+# --- Insertar nuevo término ---
+def insert_term(term, definition):
+    session.sql(f"""
+        INSERT INTO glosario (termino, definicion)
+        VALUES ('{term}', '{definition}')
+    """).collect()
 
-with col2:
-    st.markdown("### Buscar o agregar término")
+# --- Eliminar términos ---
+def delete_terms(terminos):
+    for term in terminos:
+        session.sql(f"DELETE FROM glosario WHERE termino = '{term}'").collect()
 
-    search_term = st.text_input("Buscar término...", placeholder="Ej: Arduino")
-    definition_area = st.empty()
+# --- Estado para detalle ---
+if "modo_detalle" not in st.session_state:
+    st.session_state.modo_detalle = False
 
-    if search_term and search_term in st.session_state.glossary:
-        definition_area.info(f"**{search_term}**: {st.session_state.glossary[search_term]}")
-    elif search_term:
-        definition_area.warning("Término no encontrado.")
+# --- Tabs ---
+tab1, tab2 = st.tabs(["📚 Ver glosario", "➕/🗑 Añadir/Eliminar término"])
 
-    st.markdown("---")
+# === TAB 1: Ver glosario / Detalle ===
+with tab1:
+    data = load_glosario()
 
-    with st.form("add_term_form"):
-        new_term = st.text_input("Nuevo término")
-        new_def = st.text_area("Definición")
-        submitted = st.form_submit_button("Agregar")
+    if st.session_state.modo_detalle:
+        st.markdown("### 📖 Detalle del término")
+        st.markdown(f"#### {st.session_state.detalle_termino}")
+        st.markdown(f"<p style='text-align:justify;'>{st.session_state.detalle_definicion}</p>", unsafe_allow_html=True)
 
-        if submitted:
-            if new_term and new_def:
-                st.session_state.glossary[new_term] = new_def
-                st.session_state.selected_term = new_term
-                st.success(f"Término '{new_term}' agregado correctamente.")
-            else:
-                st.error("Por favor, complete ambos campos.")
+        if st.button("🔙 Volver"):
+            st.session_state.modo_detalle = False
+            st.rerun()
 
-    st.markdown("---")
-    selected = st.session_state.get("selected_term")
-    if selected:
-        st.markdown(f"### Definición de: {selected}")
-        st.info(st.session_state.glossary[selected])
+    else:
+        search = st.text_input("🔍 Buscar término:")
+
+        if search.strip():
+            filtered = data[data["TERMINO"].str.contains(search, case=False, na=False)]
+        else:
+            filtered = data
+
+        if filtered.empty:
+            st.warning("No se encontraron resultados para esa búsqueda.")
+        else:
+            col1, col2, col3 = st.columns(3)
+
+            for idx, row in enumerate(filtered.iterrows()):
+                i, row = row
+                col = [col1, col2, col3][idx % 3]
+                with col:
+                    st.markdown(
+                        f"""
+                        <div style='border:1px solid #ddd; border-radius:10px; padding:15px; margin:10px; background-color:#f9f9f9;'>
+                            <h4>{row["TERMINO"]}</h4>
+                            <p>{row["DEFINICION"][:120]}...</p>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                    if st.button("Ver más", key=f"vermas_{idx}"):
+                        st.session_state.modo_detalle = True
+                        st.session_state.detalle_termino = row["TERMINO"]
+                        st.session_state.detalle_definicion = row["DEFINICION"]
+                        st.rerun()
+
+# === TAB 2: Añadir / Eliminar ===
+with tab2:
+    st.subheader("🛠 Añadir o eliminar término del glosario")
+    modo = st.radio("Selecciona una acción:", ["➕ Añadir", "🗑 Eliminar"], horizontal=True)
+
+    if modo == "➕ Añadir":
+        with st.form("form_add_term"):
+            nuevo_termino = st.text_input("Término")
+            nueva_definicion = st.text_area("Definición")
+            guardar = st.form_submit_button("💾 Guardar término")
+
+            if guardar:
+                if nuevo_termino.strip() and nueva_definicion.strip():
+                    insert_term(nuevo_termino.strip(), nueva_definicion.strip())
+                    st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
+                    load_glosario.clear()
+                else:
+                    st.error("❌ Ambos campos son obligatorios.")
+
+    elif modo == "🗑 Eliminar":
+        data = load_glosario()
+        opciones = data["TERMINO"].tolist()
+        seleccion = st.multiselect("Selecciona término(s) a eliminar:", opciones)
+
+        if seleccion:
+            confirmar = st.button("🗑 Eliminar término(s) seleccionados")
+            if confirmar:
+                delete_terms(seleccion)
+                st.success("✅ Término(s) eliminado(s) correctamente.")
+                load_glosario.clear()
