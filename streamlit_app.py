@@ -36,15 +36,8 @@ def insert_term(term, definition):
 def delete_terms(terminos):
     if not terminos:
         return
-    for term in terminos:
-        session.sql("DELETE FROM glosario WHERE termino = :1", params=[term]).collect()
-
-# --- Limpia los campos del formulario
-def reset_inputs():
-    if st.session_state.get("nuevo_termino_input") is not None:
-        st.session_state["nuevo_termino_input"] = ""
-    if st.session_state.get("nueva_definicion_input") is not None:
-        st.session_state["nueva_definicion_input"] = ""
+    df = session.table("glosario").filter(col("termino").isin(terminos))
+    df.delete()
 
 # --- Estado para vista de detalle ---
 if "modo_detalle" not in st.session_state:
@@ -110,8 +103,8 @@ with tab2:
                 if nuevo_termino.strip() and nueva_definicion.strip():
                     insert_term(nuevo_termino.strip(), nueva_definicion.strip())
                     st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
-                    load_glosario.clear()
-                    reset_inputs()
+                    # load_glosario.clear()
+                    st.session_state.glosario_version += 1
                     st.rerun()
                 else:
                     st.error("❌ Ambos campos son obligatorios.")
@@ -126,6 +119,7 @@ with tab2:
             if confirmar:
                 delete_terms(seleccion)
                 st.success("✅ Término(s) eliminado(s) correctamente.")
-                load_glosario.clear()
+                # load_glosario.clear()
+                st.session_state.glosario_version += 1
                 st.rerun()
 
