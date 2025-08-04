@@ -41,8 +41,10 @@ def delete_terms(terminos):
 
 # --- Limpia los campos del formulario
 def reset_inputs():
-    st.session_state.nuevo_termino_input = ""
-    st.session_state.nueva_definicion_input = ""
+    if st.session_state.get("nuevo_termino_input") is not None:
+        st.session_state["nuevo_termino_input"] = ""
+    if st.session_state.get("nueva_definicion_input") is not None:
+        st.session_state["nueva_definicion_input"] = ""
 
 # --- Estado para vista de detalle ---
 if "modo_detalle" not in st.session_state:
