@@ -11,7 +11,7 @@ if "glosario_version" not in st.session_state:
     st.session_state.glosario_version = 0
 
 # --- Título ---
-st.markdown("<h1 style='text-align:center;'>📘 Glosario Dinámico</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center;'>📘 Glosario Tecnológico</h1>", unsafe_allow_html=True)
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # --- Conexión a Snowflake ---
