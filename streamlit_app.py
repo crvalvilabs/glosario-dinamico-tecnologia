@@ -44,7 +44,7 @@ def delete_terms(terminos):
         return
     for term in terminos:
         session.sql("DELETE FROM glosario WHERE termino = :1", params=[term]).collect()
-    st.toast("Término borrado.", icon=)
+    st.toast("Término borrado.", icon='🗑️')
 
 # --- Estado para vista de detalle ---
 if "modo_detalle" not in st.session_state:
