@@ -67,7 +67,7 @@ with tab1:
         st.markdown(f"#### {st.session_state.detalle_termino}")
         st.markdown(f"<p style='text-align:justify;'>{st.session_state.detalle_definicion}</p>", unsafe_allow_html=True)
 
-        if st.button("🔙 Volver"):
+        if st.button("🔙 Volver", type="primary"):
             st.session_state.modo_detalle = False
             st.rerun()
 
@@ -94,7 +94,7 @@ with tab1:
                         """,
                         unsafe_allow_html=True
                     )
-                    if st.button("Ver más", key=f"vermas_{idx}"):
+                    if st.button("Ver más", key=f"vermas_{idx}", type="primary"):
                         st.session_state.modo_detalle = True
                         st.session_state.detalle_termino = row["TERMINO"]
                         st.session_state.detalle_definicion = row["DEFINICION"]
@@ -107,7 +107,7 @@ with tab2:
     with st.form("form_add_term"):
         nuevo_termino = st.text_input("✏️ Nombre del nuevo término", placeholder="Ej: Inteligencia Artificial", key="nuevo_termino_input")
         nueva_definicion = st.text_area("📝 Definición", placeholder="Escribe una definición clara y breve del término...", key="nueva_definicion_input")
-        guardar = st.form_submit_button("💾 Guardar término")
+        guardar = st.form_submit_button("💾 Guardar término", type="primary")
 
         if guardar:
             if not nuevo_termino.strip() or not nueva_definicion.strip():
@@ -133,7 +133,7 @@ with tab3:
         seleccion = st.multiselect("Selecciona término(s) a eliminar:", opciones)
 
         if seleccion:
-            confirmar = st.button("❌ Eliminar término(s) seleccionados")
+            confirmar = st.button("❌ Eliminar término(s) seleccionados", type="primary")
             if confirmar:
                 delete_terms(seleccion)
                 st.success(f"✅ '{nuevo_termino}' eliminado correctamente.")
