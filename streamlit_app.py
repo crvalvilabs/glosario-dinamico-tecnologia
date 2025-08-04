@@ -29,6 +29,7 @@ def load_glosario(dummy=0):
         df = session.table("glosario").select(col("termino"), col("definicion"))
         return df.to_pandas()
     except Exception as e:
+        load_glosario.clear()
         st.error("❌ Error al cargar datos desde Snowflake.")
         st.exception(e)
         return pd.DataFrame(columns=["termino", "definicion"])
