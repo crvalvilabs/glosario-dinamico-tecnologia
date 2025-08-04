@@ -49,7 +49,7 @@ if "modo_detalle" not in st.session_state:
     st.session_state.modo_detalle = False
 
 # === TABS PRINCIPALES ===
-tab1, tab2 = st.tabs(["📚 Ver glosario", "➕ Añadir / ➖ Eliminar término"])
+tab1, tab2 = st.tabs(["📚 Ver glosario", "➕ Añadir - ✖️ Eliminar término"])
 
 # === TAB 1: Ver glosario ===
 with tab1:
@@ -109,7 +109,7 @@ with tab2:
                     insert_term(nuevo_termino.strip(), nueva_definicion.strip())
                     st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
                     load_glosario.clear()
-                    reset_inputs(["nuevo_termino_input", "nueva_definicion_input"])
+                    reset_inputs()
                     st.rerun()
                 else:
                     st.error("❌ Ambos campos son obligatorios.")
