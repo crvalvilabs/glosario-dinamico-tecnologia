@@ -102,6 +102,7 @@ with tab2:
                     insert_term(nuevo_termino.strip(), nueva_definicion.strip())
                     st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
                     load_glosario.clear()
+                    st.rerun()
                 else:
                     st.error("❌ Ambos campos son obligatorios.")
 
