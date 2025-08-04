@@ -49,7 +49,7 @@ if "modo_detalle" not in st.session_state:
     st.session_state.modo_detalle = False
 
 # === TABS PRINCIPALES ===
-tab1, tab2 = st.tabs(["📚 Ver glosario", "➕/🗑 Añadir/Eliminar término"])
+tab1, tab2 = st.tabs(["📚 Ver glosario", "➕ Añadir / ➖ Eliminar término"])
 
 # === TAB 1: Ver glosario ===
 with tab1:
@@ -76,8 +76,8 @@ with tab1:
 
             for idx, row in enumerate(filtered.iterrows()):
                 _, row = row
-                col = [col1, col2, col3][idx % 3]
-                with col:
+                target_col = [col1, col2, col3][idx % 3]
+                with target_col:
                     st.markdown(
                         f"""
                         <div style='border:1px solid #ddd; border-radius:10px; padding:15px; margin:10px; background-color:#f9f9f9;'>
