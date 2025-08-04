@@ -18,10 +18,8 @@ def load_glosario():
 
 # Función para insertar término
 def insert_term(term, definition):
-    session.sql(f"""
-        INSERT INTO glosario (termino, definicion) 
-        VALUES (%s, %s)
-    """, params=[term, definition]).collect()
+    df = session.create_dataframe([[term, definition]], schema=["termino", "definicion"])
+    df.write.mode("append").save_as_table("glosario")
 
 # Función para eliminar términos
 def delete_terms(terminos):
