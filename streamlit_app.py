@@ -39,13 +39,13 @@ st.markdown(
 col1, col2 = st.columns([1, 2])
 
 with col1:
-    st.markdown("### :books: Términos")
+    st.markdown("### Términos")
     for term in st.session_state.glossary:
         if st.button(term, key=f"btn_{term}"):
             st.session_state.selected_term = term
 
 with col2:
-    st.markdown("### :mag: Buscar o agregar término")
+    st.markdown("### Buscar o agregar término")
 
     search_term = st.text_input("Buscar término...", placeholder="Ej: Arduino")
     definition_area = st.empty()
@@ -72,6 +72,5 @@ with col2:
     st.markdown("---")
     selected = st.session_state.get("selected_term")
     if selected:
-        st.markdown(f"### :blue_book: Definición de: {selected}")
+        st.markdown(f"### Definición de: {selected}")
         st.info(st.session_state.glossary[selected])
-
