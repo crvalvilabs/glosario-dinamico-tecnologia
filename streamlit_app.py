@@ -36,15 +36,16 @@ def insert_term(term, definition):
 def delete_terms(terminos):
     if not terminos:
         return
-    df = session.table("glosario").filter(col("termino").isin(terminos))
-    df.delete()
+    for term in terminos:
+        # Evita problemas de inyección: usa parámetros
+        session.sql("DELETE FROM glosario WHERE termino = :1", params=[term]).collect()
 
 # --- Estado para vista de detalle ---
 if "modo_detalle" not in st.session_state:
     st.session_state.modo_detalle = False
 
 # === TABS PRINCIPALES ===
-tab1, tab2 = st.tabs(["📚 Ver glosario", "➕ Añadir - ✖️ Eliminar término"])
+tab1, tab2, tab3 = st.tabs(["📚 Ver glosario", "➕ Añadir", "✖️ Eliminar término"])
 
 # === TAB 1: Ver glosario ===
 with tab1:
@@ -90,26 +91,27 @@ with tab1:
 
 # === TAB 2: Añadir o eliminar términos ===
 with tab2:
-    st.subheader("🛠 Añadir o eliminar término del glosario")
-    modo = st.radio("Selecciona una acción:", ["➕ Añadir", "🗑 Eliminar"], horizontal=True)
+    st.subheader("📄 Añadir término al glosario")
 
-    if modo == "➕ Añadir":
-        with st.form("form_add_term"):
-            nuevo_termino = st.text_input("Término", key="nuevo_termino_input")
-            nueva_definicion = st.text_area("Definición", key="nueva_definicion_input")
-            guardar = st.form_submit_button("💾 Guardar término")
+    with st.form("form_add_term"):
+        nuevo_termino = st.text_input("Término", key="nuevo_termino_input")
+        nueva_definicion = st.text_area("Definición", key="nueva_definicion_input")
+        guardar = st.form_submit_button("💾 Guardar término")
 
-            if guardar:
-                if nuevo_termino.strip() and nueva_definicion.strip():
-                    insert_term(nuevo_termino.strip(), nueva_definicion.strip())
-                    st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
-                    # load_glosario.clear()
-                    st.session_state.glosario_version += 1
-                    st.rerun()
-                else:
-                    st.error("❌ Ambos campos son obligatorios.")
+        if guardar:
+            if nuevo_termino.strip() and nueva_definicion.strip():
+                insert_term(nuevo_termino.strip(), nueva_definicion.strip())
+                st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
+                # load_glosario.clear()
+                st.session_state.glosario_version += 1
+                st.rerun()
+            else:
+                st.error("❌ Ambos campos son obligatorios.")
 
-    elif modo == "🗑 Eliminar":
+# === TAB 3: Eliminar términos ===
+with tab3:modo == "❌ Eliminar":
+    
+        st.subheader("🗑️ Eliminar término del glosario")
         data = load_glosario()
         opciones = data["TERMINO"].tolist()
         seleccion = st.multiselect("Selecciona término(s) a eliminar:", opciones)
