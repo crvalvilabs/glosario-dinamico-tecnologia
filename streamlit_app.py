@@ -21,15 +21,16 @@ def get_session():
 
 session = get_session()
 
-# --- Cargar glosario desde Snowflake con control de versión para invalidar caché ---
+# --- Cargar glosario desde Snowflake con control de versión ---
 @st.cache_data(ttl=300)
 def load_glosario(dummy=0):
     df = session.table("glosario").select(col("termino"), col("definicion"))
     return df.to_pandas()
 
-# --- Insertar nuevo término ---
+# --- Insertar nuevo término (seguro con Snowpark) ---
 def insert_term(term, definition):
-    session.sql("INSERT INTO glosario (termino, definicion) VALUES (%s, %s)", params=[term, definition]).collect()
+    df = session.create_dataframe([[term, definition]], schema=["termino", "definicion"])
+    df.write.mode("append").save_as_table("glosario")
 
 # --- Eliminar múltiples términos de una vez (seguro y eficiente) ---
 def delete_terms(terminos):
@@ -108,7 +109,7 @@ with tab2:
                 if nuevo_termino.strip() and nueva_definicion.strip():
                     insert_term(nuevo_termino.strip(), nueva_definicion.strip())
                     st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
-                    st.session_state.glosario_version += 1  # fuerza recarga
+                    st.session_state.glosario_version += 1
                     st.session_state.nuevo_termino = ""
                     st.session_state.nueva_definicion = ""
                     st.rerun()
@@ -125,6 +126,7 @@ with tab2:
             if confirmar:
                 delete_terms(seleccion)
                 st.success("✅ Término(s) eliminado(s) correctamente.")
-                st.session_state.glosario_version += 1  # fuerza recarga
+                st.session_state.glosario_version += 1
                 st.rerun()
+
 
