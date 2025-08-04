@@ -11,7 +11,7 @@ if "glosario_version" not in st.session_state:
     st.session_state.glosario_version = 0
 
 # --- Título ---
-st.markdown("<h1 style='text-align:center;'>📘 Glosario Tecnológico</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center;'>📖 Glosario Tecnológico</h1>", unsafe_allow_html=True)
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # --- Conexión a Snowflake ---
@@ -22,7 +22,6 @@ def get_session():
 session = get_session()
 
 # --- Cargar glosario desde Snowflake con control de versión ---
-@st.cache_data(ttl=300)
 @st.cache_data(ttl=300)
 def load_glosario(dummy=0):
     try:
@@ -45,6 +44,7 @@ def delete_terms(terminos):
         return
     for term in terminos:
         session.sql("DELETE FROM glosario WHERE termino = :1", params=[term]).collect()
+    st.toast("Término borrado.", icon=)
 
 # --- Estado para vista de detalle ---
 if "modo_detalle" not in st.session_state:
@@ -100,7 +100,7 @@ with tab2:
     st.subheader("📄 Añadir término al glosario")
 
     with st.form("form_add_term"):
-        nuevo_termino = st.text_input("📘 Nombre del nuevo término", placeholder="Ej: Inteligencia Artificial", key="nuevo_termino_input")
+        nuevo_termino = st.text_input("✏️ Nombre del nuevo término", placeholder="Ej: Inteligencia Artificial", key="nuevo_termino_input")
         nueva_definicion = st.text_area("📝 Definición", placeholder="Escribe una definición clara y breve del término...", key="nueva_definicion_input")
         guardar = st.form_submit_button("💾 Guardar término")
 
@@ -136,6 +136,6 @@ with tab3:
 st.markdown("""
 <hr style='margin-top: 4rem;'>
 <div style='text-align:center; color:#6c757d; font-size:0.9rem;'>
-    Desarrollado por <strong>IA Visionaria 2025</strong>
+    Developed by 🤖 <strong>IA Visionaria 2025</strong>
 </div>
 """, unsafe_allow_html=True)
