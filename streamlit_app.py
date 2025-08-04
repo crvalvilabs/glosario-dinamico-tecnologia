@@ -1,9 +1,14 @@
 import streamlit as st
 import pandas as pd
+from datetime import datetime
 from snowflake.snowpark.functions import col
 
 # --- Configuración general ---
 st.set_page_config(page_title="Glosario Dinámico", layout="wide")
+
+# --- Inicializar contador de versión para forzar recarga del caché ---
+if "glosario_version" not in st.session_state:
+    st.session_state.glosario_version = 0
 
 # --- Título ---
 st.markdown("<h1 style='text-align:center;'>📘 Glosario Dinámico</h1>", unsafe_allow_html=True)
@@ -16,35 +21,34 @@ def get_session():
 
 session = get_session()
 
-# --- Cargar glosario desde Snowflake ---
-@st.cache_data(ttl=60)
-def load_glosario():
+# --- Cargar glosario desde Snowflake con control de versión para invalidar caché ---
+@st.cache_data(ttl=300)
+def load_glosario(dummy=0):
     df = session.table("glosario").select(col("termino"), col("definicion"))
     return df.to_pandas()
 
 # --- Insertar nuevo término ---
 def insert_term(term, definition):
-    session.sql(f"""
-        INSERT INTO glosario (termino, definicion)
-        VALUES ('{term}', '{definition}')
-    """).collect()
+    session.sql("INSERT INTO glosario (termino, definicion) VALUES (%s, %s)", params=[term, definition]).collect()
 
-# --- Eliminar términos ---
+# --- Eliminar múltiples términos de una vez (seguro y eficiente) ---
 def delete_terms(terminos):
-    placeholders = ','.join(['%s'] * len(terminos))
+    if not terminos:
+        return
+    placeholders = ",".join(["%s"] * len(terminos))
     query = f"DELETE FROM glosario WHERE termino IN ({placeholders})"
     session.sql(query, params=terminos).collect()
 
-# --- Estado para detalle ---
+# --- Estado para vista de detalle ---
 if "modo_detalle" not in st.session_state:
     st.session_state.modo_detalle = False
 
-# --- Tabs ---
+# === TABS PRINCIPALES ===
 tab1, tab2 = st.tabs(["📚 Ver glosario", "➕/🗑 Añadir/Eliminar término"])
 
-# === TAB 1: Ver glosario / Detalle ===
+# === TAB 1: Ver glosario ===
 with tab1:
-    data = load_glosario()
+    data = load_glosario(dummy=st.session_state.glosario_version)
 
     if st.session_state.modo_detalle:
         st.markdown("### 📖 Detalle del término")
@@ -58,10 +62,7 @@ with tab1:
     else:
         search = st.text_input("🔍 Buscar término:")
 
-        if search.strip():
-            filtered = data[data["TERMINO"].str.contains(search, case=False, na=False)]
-        else:
-            filtered = data
+        filtered = data[data["TERMINO"].str.contains(search, case=False, na=False)] if search.strip() else data
 
         if filtered.empty:
             st.warning("No se encontraron resultados para esa búsqueda.")
@@ -69,7 +70,7 @@ with tab1:
             col1, col2, col3 = st.columns(3)
 
             for idx, row in enumerate(filtered.iterrows()):
-                i, row = row
+                _, row = row
                 col = [col1, col2, col3][idx % 3]
                 with col:
                     st.markdown(
@@ -102,21 +103,20 @@ with tab2:
             nuevo_termino = st.text_input("Término", value=st.session_state.nuevo_termino, key="nuevo_termino_input")
             nueva_definicion = st.text_area("Definición", value=st.session_state.nueva_definicion, key="nueva_definicion_input")
             guardar = st.form_submit_button("💾 Guardar término")
-    
+
             if guardar:
                 if nuevo_termino.strip() and nueva_definicion.strip():
                     insert_term(nuevo_termino.strip(), nueva_definicion.strip())
                     st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
-                    # Limpiar inputs
+                    st.session_state.glosario_version += 1  # fuerza recarga
                     st.session_state.nuevo_termino = ""
                     st.session_state.nueva_definicion = ""
-                    load_glosario.clear()
                     st.rerun()
                 else:
                     st.error("❌ Ambos campos son obligatorios.")
 
     elif modo == "🗑 Eliminar":
-        data = load_glosario()
+        data = load_glosario(dummy=st.session_state.glosario_version)
         opciones = data["TERMINO"].tolist()
         seleccion = st.multiselect("Selecciona término(s) a eliminar:", opciones)
 
@@ -125,5 +125,6 @@ with tab2:
             if confirmar:
                 delete_terms(seleccion)
                 st.success("✅ Término(s) eliminado(s) correctamente.")
-                load_glosario.clear()
+                st.session_state.glosario_version += 1  # fuerza recarga
                 st.rerun()
+
