@@ -27,10 +27,9 @@ def delete_terms(terminos):
         session.sql(f"DELETE FROM glosario WHERE termino = :1", params=[term]).collect()
 
 # Función para resetear inputs
-def reset_inputs(keys: list[str]):
-    for key in keys:
-        if key in st.session_state:
-            st.session_state[key] = ""
+def reset_inputs():
+    st.session_state.nuevo_termino_input = ""
+    st.session_state.nueva_definicion_input = ""
 
 # Tabs de navegación
 tab1, tab2 = st.tabs(["📚 Ver glosario", "➕/🗑 Añadir/Eliminar término"])
@@ -78,7 +77,7 @@ with tab2:
                     insert_term(nuevo_termino.strip(), nueva_definicion.strip())
                     st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
                     load_glosario.clear()
-                    reset_inputs(["nuevo_termino_input", "nueva_definicion_input"])
+                    reset_inputs()
                     st.rerun()
                 else:
                     st.error("❌ Ambos campos son obligatorios.")
