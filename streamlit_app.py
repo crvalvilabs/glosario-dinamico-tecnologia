@@ -109,22 +109,21 @@ with tab2:
         nueva_definicion = st.text_area("📝 Definición", placeholder="Escribe una definición clara y breve del término...", key="nueva_definicion_input")
         guardar = st.form_submit_button("💾 Guardar término")
 
-        is_exist = validate_term(nuevo_termino.strip())
-        if is_exist:
-            st.error("⛔ El término ya existe.")
-            return
-
         if guardar:
-            if nuevo_termino.strip() and nueva_definicion.strip():
-                insert_term(nuevo_termino.strip(), nueva_definicion.strip())
-                st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
-                load_glosario.clear()
-                st.session_state.glosario_version += 1
-                st.rerun()
-            else:
+            if not nuevo_termino.strip() or not nueva_definicion.strip():
                 st.warning("⚠️ Por favor completa ambos campos.")
-                
+                st.stop()
 
+            if validate_term(nuevo_termino.strip()):
+                st.error("⛔ El término ya existe en el glosario.")
+                st.stop()
+
+            insert_term(nuevo_termino.strip(), nueva_definicion.strip())
+            st.success(f"✅ '{nuevo_termino}' fue añadido correctamente.")
+            load_glosario.clear()
+            st.session_state.glosario_version += 1
+            st.rerun()
+                
 # === TAB 3: Eliminar términos ===
 with tab3:
         st.subheader("🗑️ Eliminar término del glosario")
