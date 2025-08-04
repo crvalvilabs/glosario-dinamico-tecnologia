@@ -15,7 +15,23 @@ if "glossary" not in st.session_state:
 st.set_page_config(layout="wide", page_title="Glosario Streamlit")
 
 st.markdown(
-    "<style> .block-container { padding-top: 2rem; } </style>",
+    """
+    <style>
+        .block-container { padding-top: 2rem; }
+        .term-button {
+            background: none;
+            border: none;
+            color: #3366cc;
+            text-align: left;
+            padding: 0.5rem 0;
+            cursor: pointer;
+        }
+        .term-button:hover {
+            color: #003366;
+            text-decoration: underline;
+        }
+    </style>
+    """,
     unsafe_allow_html=True,
 )
 
@@ -23,11 +39,13 @@ st.markdown(
 col1, col2 = st.columns([1, 2])
 
 with col1:
-    st.markdown("### 📚 Términos")
-    selected_term = st.radio("Selecciona un término", list(st.session_state.glossary.keys()), label_visibility="collapsed")
+    st.markdown("### :books: Términos")
+    for term in st.session_state.glossary:
+        if st.button(term, key=f"btn_{term}"):
+            st.session_state.selected_term = term
 
 with col2:
-    st.markdown("### 🔍 Buscar o agregar término")
+    st.markdown("### :mag: Buscar o agregar término")
 
     search_term = st.text_input("Buscar término...", placeholder="Ej: Arduino")
     definition_area = st.empty()
@@ -52,5 +70,8 @@ with col2:
                 st.error("Por favor, complete ambos campos.")
 
     st.markdown("---")
-    st.markdown(f"### 📖 Definición de: {selected_term}")
-    st.info(st.session_state.glossary[selected_term])
+    selected = st.session_state.get("selected_term")
+    if selected:
+        st.markdown(f"### :blue_book: Definición de: {selected}")
+        st.info(st.session_state.glossary[selected])
+
