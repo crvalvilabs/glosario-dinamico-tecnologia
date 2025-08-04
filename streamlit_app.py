@@ -51,7 +51,7 @@ if "modo_detalle" not in st.session_state:
     st.session_state.modo_detalle = False
 
 # === TABS PRINCIPALES ===
-tab1, tab2, tab3 = st.tabs(["📚 Ver glosario", "➕ Añadir", "✖️ Eliminar término"])
+tab1, tab2, tab3 = st.tabs(["📚 Ver glosario", "➕ Añadir término", "✖️ Eliminar término"])
 
 # === TAB 1: Ver glosario ===
 with tab1:
