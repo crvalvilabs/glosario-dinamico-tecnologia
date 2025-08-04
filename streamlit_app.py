@@ -36,9 +36,10 @@ def insert_term(term, definition):
 def delete_terms(terminos):
     if not terminos:
         return
-    for term in terminos:
-        # Evita problemas de inyección: usa parámetros
-        session.sql("DELETE FROM glosario WHERE termino = :1", params=[term]).collect()
+    df_temp = session.create_dataframe([[t] for t in terminos], schema=["termino"])
+    session.table("glosario") \
+        .join(df_temp, df_temp["termino"] == col("termino")) \
+        .delete()
 
 # --- Estado para vista de detalle ---
 if "modo_detalle" not in st.session_state:
@@ -111,7 +112,8 @@ with tab2:
 # === TAB 3: Eliminar términos ===
 with tab3:
         st.subheader("🗑️ Eliminar término del glosario")
-        data = load_glosario()
+    
+        data = load_glosario(dummy=st.session_state.glosario_version)
         opciones = data["TERMINO"].tolist()
         seleccion = st.multiselect("Selecciona término(s) a eliminar:", opciones)
 
@@ -119,9 +121,9 @@ with tab3:
             confirmar = st.button("🗑 Eliminar término(s) seleccionados")
             if confirmar:
                 delete_terms(seleccion)
-                st.success("✅ Término(s) eliminado(s) correctamente.")
                 # load_glosario.clear()
                 st.session_state.glosario_version += 1
+                st.success("✅ Término(s) eliminado(s) correctamente.")
                 st.rerun()
 
 # --- Footer ---
