@@ -133,10 +133,9 @@ with tab3:
                 st.rerun()
 
 # --- Footer ---
-st.markdown(
-    "<footer style='text-align:center; margin-top: 50px; color: #6c757d;'>"
-    "Developed by <strong>IA Visionaria 2025</strong>"
-    "</footer>",
-    unsafe_allow_html=True,
-)
-
+st.markdown("""
+<hr style='margin-top: 4rem;'>
+<div style='text-align:center; color:#6c757d; font-size:0.9rem;'>
+    Desarrollado por <strong>IA Visionaria 2025</strong>
+</div>
+""", unsafe_allow_html=True)
