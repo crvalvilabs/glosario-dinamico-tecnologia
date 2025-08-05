@@ -135,7 +135,7 @@ with tab2:
     # Formulario con mejor estilo
     st.markdown("""
     <div class='card' style='margin: 1rem 0;'>
-        <h4 style='color: #2D3748; margin-bottom: 1.5rem;'>Información del término</h4>
+        <h4 style='color: #2D3748; margin-bottom: 1rem;'>Información del término</h4>
     </div>
     """, unsafe_allow_html=True)
 
@@ -186,7 +186,7 @@ with tab3:
     
     if data.empty:
         st.markdown("""
-        <div class='card' style='text-align: center; padding: 3rem;'>
+        <div class='card' style='text-align: center; padding: 2rem;'>
             <h3 style='color: #68D391;'>Glosario vacío</h3>
             <p>No hay términos en el glosario para eliminar.</p>
         </div>
