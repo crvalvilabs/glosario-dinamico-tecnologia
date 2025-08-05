@@ -1,7 +1,7 @@
 [theme]
 base="light"
-primaryColor="#495057"                 # Gris oscuro (botones, links activos)
-backgroundColor="#f5f7fa"              # Gris claro para fondo general (¡muy buena elección!)
-secondaryBackgroundColor="#FFFFFF"    # Fondo de tarjetas u objetos destacados
-textColor="#343A40"                   # Gris oscuro para el texto, excelente contraste
+primaryColor="#1f2937"                 # Gris carbón (ideal para botones, links activos)
+backgroundColor="#e5e7eb"              # Gris claro frío (en vez de blanco puro)
+secondaryBackgroundColor="#f1f5f9"     # Gris más cálido para tarjetas (tipo #f0f2f5 de Notion)
+textColor="#111827"                    # Gris casi negro (excelente para legibilidad)
 font="sans serif"
