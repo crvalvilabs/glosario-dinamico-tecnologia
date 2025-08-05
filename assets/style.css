@@ -1,47 +1,161 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
-html, body, [class*="css"] {
+/* Fondo general inspirado en la app de plantas */
+html, body {
+    font-family: 'Inter', sans-serif !important;
+    background-color: #F5F7FA !important;
+    background: linear-gradient(135deg, #F5F7FA 0%, #E8EDF5 100%) !important;
+    min-height: 100vh;
+}
+
+[class*="css"] {
     font-family: 'Inter', sans-serif !important;
 }
 
+/* Inputs con estilo más moderno */
 input[type="text"], textarea {
     background-color: #FFFFFF !important;
-    border: 1px solid #E0E0E0 !important;
-    border-radius: 10px;
-    padding: 0.6rem;
+    border: 1px solid #E5E9F0 !important;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
     font-size: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
 }
 
+input[type="text"]:focus, textarea:focus {
+    border-color: #7ED321 !important;
+    box-shadow: 0 0 0 3px rgba(126, 211, 33, 0.1) !important;
+    outline: none;
+}
+
+/* Cards con sombras mejoradas inspiradas en la app */
 .card {
     background-color: #FFFFFF;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    border: 2px solid #E0E0E0;
+    padding: 24px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border: 1px solid rgba(255,255,255,0.8);
     transition: all 0.3s ease-in-out;
-}
-.card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    backdrop-filter: blur(10px);
 }
 
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    border-color: rgba(126, 211, 33, 0.2);
+}
+
+/* Botones principales con el verde de la app de plantas */
 button[kind="primary"] {
-    background-color: #7F57FF !important;
+    background: linear-gradient(135deg, #7ED321 0%, #6BB91A 100%) !important;
     color: white !important;
-    border-radius: 10px;
-    padding: 0.6rem 1rem;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
     font-weight: 600;
     font-size: 1rem;
-}
-button[kind="primary"]:hover {
-    background-color: #5F35EF !important;
+    border: none;
+    box-shadow: 0 4px 12px rgba(126, 211, 33, 0.3);
+    transition: all 0.2s ease;
 }
 
+button[kind="primary"]:hover {
+    background: linear-gradient(135deg, #6BB91A 0%, #5A9D15 100%) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(126, 211, 33, 0.4);
+}
+
+button[kind="primary"]:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(126, 211, 33, 0.3);
+}
+
+/* Botones secundarios */
+button[kind="secondary"] {
+    background-color: #F8F9FA !important;
+    color: #495057 !important;
+    border: 1px solid #E5E9F0 !important;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+button[kind="secondary"]:hover {
+    background-color: #E9ECEF !important;
+    border-color: #7ED321 !important;
+    color: #7ED321 !important;
+}
+
+/* Título del glosario */
 .glossary-title {
     text-align: center;
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(90deg, #FF6B9D, #B06AB3, #7A67EE);
+    background: linear-gradient(135deg, #7ED321, #6BB91A, #5A9D15);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-family: "Inter", sans-serif;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Contenedor principal con mejor espaciado */
+.main-container {
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 24px;
+    padding: 2rem;
+    margin: 1rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.8);
+}
+
+/* Badges y etiquetas */
+.badge {
+    background: linear-gradient(135deg, #7ED321, #6BB91A);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(126, 211, 33, 0.3);
+}
+
+/* Mejoras adicionales para elementos de formulario */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    font-weight: 600;
+    color: #2D3748;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Efectos de glassmorphism para elementos destacados */
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Animaciones sutiles */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
 }
