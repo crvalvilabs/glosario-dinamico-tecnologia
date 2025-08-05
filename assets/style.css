@@ -93,12 +93,47 @@ button[kind="secondary"]:hover {
     text-align: center;
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #7ED321, #6BB91A, #5A9D15);
+    background: linear-gradient(135deg, #2D3748, #4A5568, #68D391);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-family: "Inter", sans-serif;
     margin-bottom: 2rem;
     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Alternativa 1: Gradiente más sutil */
+.glossary-title-soft {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #48BB78, #38A169, #2F855A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "Inter", sans-serif;
+    margin-bottom: 2rem;
+}
+
+/* Alternativa 2: Solo texto gris oscuro elegante */
+.glossary-title-dark {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 800;
+    color: #2D3748;
+    font-family: "Inter", sans-serif;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Alternativa 3: Gradiente gris a verde sutil */
+.glossary-title-elegant {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #4A5568, #68D391, #48BB78);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "Inter", sans-serif;
+    margin-bottom: 2rem;
 }
 
 /* Contenedor principal con mejor espaciado */
