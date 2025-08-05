@@ -240,7 +240,7 @@ st.markdown("""
     <div class='separator-line'></div>
     <div class='card' style='text-align: center; background: rgba(108, 117, 125, 0.03);'>
         <p style='margin: 0; color: #6C757D; font-size: 0.9rem;'>
-            Desarrollado con amor por <strong style='color: #495057;'>IA Visionaria 2025</strong>
+            Desarrollado por <strong style='color: #495057;'>IA Visionaria 2025</strong>
         </p>
     </div>
 </div>
