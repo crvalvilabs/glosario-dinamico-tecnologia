@@ -134,7 +134,7 @@ with tab2:
     
     # Formulario con mejor estilo
     st.markdown("""
-    <div class='card' style='margin: 2rem 0;'>
+    <div class='card' style='margin: 1rem 0;'>
         <h4 style='color: #2D3748; margin-bottom: 1.5rem;'>Información del término</h4>
     </div>
     """, unsafe_allow_html=True)
