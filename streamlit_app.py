@@ -190,7 +190,7 @@ if "glosario_version" not in st.session_state:
     st.session_state.glosario_version = 0
 
 # --- Título completamente limpio ---
-st.markdown("# 📖 Glosario Tecnológico", unsafe_allow_html=False)
+st.markdown("# 📖 Glosario Tecnológico", unsafe_allow_html=True)
 
 # Línea separadora
 st.markdown("<div style='height: 2px; background: linear-gradient(90deg, transparent, #7ED321, transparent); margin: 2rem 0;'></div>", unsafe_allow_html=True)
