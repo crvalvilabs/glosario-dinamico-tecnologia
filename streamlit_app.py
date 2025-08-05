@@ -193,9 +193,9 @@ with tab3:
         """, unsafe_allow_html=True)
     else:
         st.markdown("""
-        <div class='card' style='margin: 2rem 0;'>
-            <h4 style='color: #2D3748; margin-bottom: 1.5rem;'>Selecciona los términos a eliminar</h4>
-            <p style='color: #E53E3E; font-size: 0.9rem;'>Esta acción no se puede deshacer.</p>
+        <div class='card' style='margin: 1rem 0;'>
+            <h4 style='color: #2D3748; margin-bottom: 1rem;'>Selecciona los términos a eliminar</h4>
+            <p style='color: #E53E3E; font-size: 0.8rem;'>Esta acción no se puede deshacer.</p>
         </div>
         """, unsafe_allow_html=True)
         
@@ -208,9 +208,7 @@ with tab3:
 
         if seleccion:
             confirmar = st.button(
-                    f"❌ Eliminar {len(seleccion)} término(s)", 
-                    type="primary")
-                
+                    f"❌ Eliminar {len(seleccion)} término(s)", type="primary")
             if confirmar:
                 try:
                     delete_terms(seleccion)
