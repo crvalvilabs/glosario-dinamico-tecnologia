@@ -40,7 +40,7 @@ button[kind="primary"]:hover {
     text-align: center;
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(90deg, #E91E63, #9C27B0, #673AB7);
+    background: linear-gradient(90deg, #FF6B9D, #B06AB3, #7A67EE);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-family: "Inter", sans-serif;
