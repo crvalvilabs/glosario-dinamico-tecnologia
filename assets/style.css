@@ -1,17 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
-/* Fondo general inspirado en HealthSync */
-html, body {
-    font-family: 'Inter', sans-serif !important;
-    background-color: #F8F9FA !important;
-    background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%) !important;
-    min-height: 100vh;
-}
-
-[class*="css"] {
-    font-family: 'Inter', sans-serif !important;
-}
-
 /* Inputs con estilo más moderno */
 input[type="text"], textarea {
     background-color: #FFFFFF !important;
