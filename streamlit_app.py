@@ -207,22 +207,9 @@ with tab3:
         )
 
         if seleccion:
-            st.markdown(f"""
-            <div class='card' style='background-color: #FED7D7; border-left: 4px solid #E53E3E;'>
-                <p><strong>Términos seleccionados para eliminar:</strong></p>
-                <ul>
-                    {''.join([f'<li>{term}</li>' for term in seleccion])}
-                </ul>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            col1, col2, col3 = st.columns([1, 1, 1])
-            with col2:
-                confirmar = st.button(
+            confirmar = st.button(
                     f"❌ Eliminar {len(seleccion)} término(s)", 
-                    type="primary",
-                    use_container_width=True
-                )
+                    type="primary")
                 
             if confirmar:
                 try:
