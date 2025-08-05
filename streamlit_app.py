@@ -18,10 +18,10 @@ if "glosario_version" not in st.session_state:
     st.session_state.glosario_version = 0
 
 # --- Título completamente limpio ---
-st.markdown("# 📖 Glosario Tecnológico", unsafe_allow_html=True)
+st.markdown("# 📖 Glosario Tecnológico", unsafe_allow_html=False)
 
-# Línea separadora
-st.markdown("<div style='height: 2px; background: linear-gradient(90deg, transparent, #7ED321, transparent); margin: 2rem 0;'></div>", unsafe_allow_html=True)
+# Línea separadora sutil
+st.markdown("<div class='separator-line'></div>", unsafe_allow_html=True)
 
 # --- Conexión a Snowflake ---
 @st.cache_resource
@@ -76,8 +76,8 @@ with tab1:
         st.markdown("### 📖 Detalle del término")
         st.markdown(f"""
         <div class='card' style='margin: 2rem 0;'>
-            <h2 style='color: #2D3748; margin-bottom: 1rem;'>{st.session_state.detalle_termino}</h2>
-            <p style='text-align: justify; line-height: 1.6; color: #4A5568;'>{st.session_state.detalle_definicion}</p>
+            <h2 style='color: #343A40; margin-bottom: 1rem;'>{st.session_state.detalle_termino}</h2>
+            <p style='text-align: justify; line-height: 1.6; color: #6C757D;'>{st.session_state.detalle_definicion}</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -112,17 +112,17 @@ with tab1:
                 _, row = row
                 target_col = [col1, col2, col3][idx % 3]
                 with target_col:
-                    # Card mejorada con hover y mejor diseño
+                    # Card mejorada con botón de texto simple
                     st.markdown(
                         f"""
                         <div class='card' style='margin-bottom: 1.5rem; min-height: 200px;'>
-                            <h4 style='color: #2D3748; margin-bottom: 1rem; font-weight: 700;'>{row["TERMINO"]}</h4>
-                            <p style='color: #4A5568; line-height: 1.5; margin-bottom: 1.5rem;'>{row["DEFINICION"][:120]}...</p>
+                            <h4 style='color: #343A40; margin-bottom: 1rem; font-weight: 700;'>{row["TERMINO"]}</h4>
+                            <p style='color: #6C757D; line-height: 1.5; margin-bottom: 1.5rem;'>{row["DEFINICION"][:120]}...</p>
                         </div>
                         """,
                         unsafe_allow_html=True
                     )
-                    if st.button("Ver más", key=f"vermas_{idx}", type="primary", use_container_width=True):
+                    if st.button("Ver más", key=f"vermas_{idx}", type="tertiary", use_container_width=False):
                         st.session_state.modo_detalle = True
                         st.session_state.detalle_termino = row["TERMINO"]
                         st.session_state.detalle_definicion = row["DEFINICION"]
@@ -234,13 +234,13 @@ with tab3:
                 except Exception as e:
                     st.error(f"❌ Error al eliminar términos: {e}")
 
-# --- Footer mejorado ---
+# --- Footer mejorado con estilo HealthSync ---
 st.markdown("""
 <div style='margin-top: 4rem;'>
-    <div style='height: 2px; background: linear-gradient(90deg, transparent, #7ED321, transparent); margin: 2rem 0;'></div>
-    <div class='card' style='text-align: center; background: rgba(126, 211, 33, 0.05);'>
-        <p style='margin: 0; color: #4A5568; font-size: 0.9rem;'>
-            Desarrollado con amor por <strong style='color: #7ED321;'>IA Visionaria 2025</strong>
+    <div class='separator-line'></div>
+    <div class='card' style='text-align: center; background: rgba(108, 117, 125, 0.03);'>
+        <p style='margin: 0; color: #6C757D; font-size: 0.9rem;'>
+            Desarrollado con amor por <strong style='color: #495057;'>IA Visionaria 2025</strong>
         </p>
     </div>
 </div>
