@@ -151,14 +151,10 @@ with tab2:
             key="nueva_definicion_input",
             height=150
         )
-        
-        col1, col2, col3 = st.columns([1, 1, 1])
-        with col2:
-            guardar = st.form_submit_button(
-                "💾 Guardar término", 
-                type="primary",
-                use_container_width=True
-            )
+        guardar = st.form_submit_button(
+            "💾 Guardar término", 
+            type="primary"
+        )
 
         if guardar:
             if not nuevo_termino.strip() or not nueva_definicion.strip():
