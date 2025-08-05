@@ -189,19 +189,10 @@ st.set_page_config(page_title="Glosario Tecnológico", layout="wide")
 if "glosario_version" not in st.session_state:
     st.session_state.glosario_version = 0
 
-# --- Título mejorado con el nuevo estilo ---
-st.markdown("""
-<div style='text-align:center; font-size: 2.5rem; margin-bottom: 1rem;'>📖</div>
-""", unsafe_allow_html=True)
+# --- Título completamente limpio ---
+st.markdown("# 📖 Glosario Tecnológico", unsafe_allow_html=False)
 
-# Título con gradiente elegante
-st.markdown("""
-<div class='glossary-title-dark'>
-    Glosario Tecnológico
-</div>
-""", unsafe_allow_html=True)
-
-# Línea separadora más sutil
+# Línea separadora
 st.markdown("<div style='height: 2px; background: linear-gradient(90deg, transparent, #7ED321, transparent); margin: 2rem 0;'></div>", unsafe_allow_html=True)
 
 # --- Conexión a Snowflake ---
@@ -253,10 +244,11 @@ with tab1:
     data = load_glosario(dummy=st.session_state.glosario_version)
 
     if st.session_state.modo_detalle:
-        # Contenedor con estilo de card para el detalle
+        # Mostrar título y definición sin emojis en HTML
+        st.markdown("### 📖 Detalle del término")
         st.markdown(f"""
         <div class='card' style='margin: 2rem 0;'>
-            <h2 style='color: #2D3748; margin-bottom: 1rem;'>📖 {st.session_state.detalle_termino}</h2>
+            <h2 style='color: #2D3748; margin-bottom: 1rem;'>{st.session_state.detalle_termino}</h2>
             <p style='text-align: justify; line-height: 1.6; color: #4A5568;'>{st.session_state.detalle_definicion}</p>
         </div>
         """, unsafe_allow_html=True)
@@ -279,7 +271,7 @@ with tab1:
         if filtered.empty:
             st.markdown("""
             <div class='card' style='text-align: center; padding: 3rem;'>
-                <h3 style='color: #68D391;'>🔍</h3>
+                <h3 style='color: #68D391;'>Sin resultados</h3>
                 <p>No se encontraron resultados para esa búsqueda.</p>
             </div>
             """, unsafe_allow_html=True)
@@ -315,7 +307,7 @@ with tab2:
     # Formulario con mejor estilo
     st.markdown("""
     <div class='card' style='margin: 2rem 0;'>
-        <h4 style='color: #2D3748; margin-bottom: 1.5rem;'>📝 Información del término</h4>
+        <h4 style='color: #2D3748; margin-bottom: 1.5rem;'>Información del término</h4>
     </div>
     """, unsafe_allow_html=True)
 
@@ -367,14 +359,14 @@ with tab3:
     if data.empty:
         st.markdown("""
         <div class='card' style='text-align: center; padding: 3rem;'>
-            <h3 style='color: #68D391;'>📚</h3>
+            <h3 style='color: #68D391;'>Glosario vacío</h3>
             <p>No hay términos en el glosario para eliminar.</p>
         </div>
         """, unsafe_allow_html=True)
     else:
         st.markdown("""
         <div class='card' style='margin: 2rem 0;'>
-            <h4 style='color: #2D3748; margin-bottom: 1.5rem;'>⚠️ Selecciona los términos a eliminar</h4>
+            <h4 style='color: #2D3748; margin-bottom: 1.5rem;'>Selecciona los términos a eliminar</h4>
             <p style='color: #E53E3E; font-size: 0.9rem;'>Esta acción no se puede deshacer.</p>
         </div>
         """, unsafe_allow_html=True)
@@ -420,7 +412,7 @@ st.markdown("""
     <div style='height: 2px; background: linear-gradient(90deg, transparent, #7ED321, transparent); margin: 2rem 0;'></div>
     <div class='card' style='text-align: center; background: rgba(126, 211, 33, 0.05);'>
         <p style='margin: 0; color: #4A5568; font-size: 0.9rem;'>
-            Desarrollado por <strong style='color: #7ED321;'>IA Visionaria 2025</strong>
+            Desarrollado con amor por <strong style='color: #7ED321;'>IA Visionaria 2025</strong>
         </p>
     </div>
 </div>
