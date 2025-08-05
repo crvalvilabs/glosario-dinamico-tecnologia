@@ -1,7 +1,7 @@
 [theme]
 base="light"
-primaryColor="#495057"
-backgroundColor="#f9fafb"
-secondaryBackgroundColor="#FFFFFF"
-textColor="#343A40"
+primaryColor="#495057"                 # Gris oscuro (botones, links activos)
+backgroundColor="#f5f7fa"              # Gris claro para fondo general (¡muy buena elección!)
+secondaryBackgroundColor="#FFFFFF"    # Fondo de tarjetas u objetos destacados
+textColor="#343A40"                   # Gris oscuro para el texto, excelente contraste
 font="sans serif"
