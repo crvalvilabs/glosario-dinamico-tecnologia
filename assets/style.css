@@ -24,8 +24,8 @@ input[type="text"], textarea {
 }
 
 input[type="text"]:focus, textarea:focus {
-    border-color: #6C757D !important;
-    box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.1) !important;
+    border-color: transparent !important;
+    box-shadow: 0 0 0 2px rgba(108, 117, 125, 0.3) !important;
     outline: none;
 }
 
