@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
-/* Fondo general inspirado en la app de plantas */
+/* Fondo general inspirado en HealthSync */
 html, body {
     font-family: 'Inter', sans-serif !important;
-    background-color: #F5F7FA !important;
-    background: linear-gradient(135deg, #F5F7FA 0%, #E8EDF5 100%) !important;
+    background-color: #F8F9FA !important;
+    background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%) !important;
     min-height: 100vh;
 }
 
@@ -15,8 +15,8 @@ html, body {
 /* Inputs con estilo más moderno */
 input[type="text"], textarea {
     background-color: #FFFFFF !important;
-    border: 1px solid #E5E9F0 !important;
-    border-radius: 12px;
+    border: 1px solid #DEE2E6 !important;
+    border-radius: 8px;
     padding: 0.75rem 1rem;
     font-size: 1rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -24,58 +24,57 @@ input[type="text"], textarea {
 }
 
 input[type="text"]:focus, textarea:focus {
-    border-color: #7ED321 !important;
-    box-shadow: 0 0 0 3px rgba(126, 211, 33, 0.1) !important;
+    border-color: #6C757D !important;
+    box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.1) !important;
     outline: none;
 }
 
-/* Cards con sombras mejoradas inspiradas en la app */
+/* Cards con sombras sutiles como HealthSync */
 .card {
     background-color: #FFFFFF;
     padding: 24px;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid #E9ECEF;
     transition: all 0.3s ease-in-out;
-    backdrop-filter: blur(10px);
 }
 
 .card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-    border-color: rgba(126, 211, 33, 0.2);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border-color: #CED4DA;
 }
 
-/* Botones principales con el verde de la app de plantas */
+/* Botones principales con estilo HealthSync */
 button[kind="primary"] {
-    background: linear-gradient(135deg, #7ED321 0%, #6BB91A 100%) !important;
+    background: linear-gradient(135deg, #495057 0%, #343A40 100%) !important;
     color: white !important;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 0.75rem 1.5rem;
     font-weight: 600;
     font-size: 1rem;
     border: none;
-    box-shadow: 0 4px 12px rgba(126, 211, 33, 0.3);
+    box-shadow: 0 2px 8px rgba(73, 80, 87, 0.2);
     transition: all 0.2s ease;
 }
 
 button[kind="primary"]:hover {
-    background: linear-gradient(135deg, #6BB91A 0%, #5A9D15 100%) !important;
+    background: linear-gradient(135deg, #343A40 0%, #212529 100%) !important;
     transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(126, 211, 33, 0.4);
+    box-shadow: 0 4px 12px rgba(73, 80, 87, 0.3);
 }
 
 button[kind="primary"]:active {
     transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(126, 211, 33, 0.3);
+    box-shadow: 0 2px 8px rgba(73, 80, 87, 0.2);
 }
 
 /* Botones secundarios */
 button[kind="secondary"] {
     background-color: #F8F9FA !important;
     color: #495057 !important;
-    border: 1px solid #E5E9F0 !important;
-    border-radius: 12px;
+    border: 1px solid #DEE2E6 !important;
+    border-radius: 8px;
     padding: 0.75rem 1.5rem;
     font-weight: 500;
     font-size: 1rem;
@@ -84,8 +83,26 @@ button[kind="secondary"] {
 
 button[kind="secondary"]:hover {
     background-color: #E9ECEF !important;
-    border-color: #7ED321 !important;
-    color: #7ED321 !important;
+    border-color: #ADB5BD !important;
+    color: #343A40 !important;
+}
+
+/* Botones terciarios (solo texto como "Ver más") */
+button[kind="tertiary"] {
+    background: none !important;
+    color: #6C757D !important;
+    border: none !important;
+    padding: 0.5rem 0 !important;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    transition: all 0.2s ease;
+}
+
+button[kind="tertiary"]:hover {
+    color: #495057 !important;
+    text-decoration: none;
+    background: none !important;
 }
 
 /* Título del glosario */
@@ -93,69 +110,42 @@ button[kind="secondary"]:hover {
     text-align: center;
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #2D3748, #4A5568, #68D391);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: "Inter", sans-serif;
-    margin-bottom: 2rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* Alternativa 1: Gradiente más sutil */
-.glossary-title-soft {
-    text-align: center;
-    font-size: 3rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #48BB78, #38A169, #2F855A);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: "Inter", sans-serif;
-    margin-bottom: 2rem;
-}
-
-/* Alternativa 2: Solo texto gris oscuro elegante */
-.glossary-title-dark {
-    text-align: center;
-    font-size: 3rem;
-    font-weight: 800;
-    color: #2D3748;
+    color: #343A40;
     font-family: "Inter", sans-serif;
     margin-bottom: 2rem;
     text-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-/* Alternativa 3: Gradiente gris a verde sutil */
-.glossary-title-elegant {
+.glossary-title-dark {
     text-align: center;
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #4A5568, #68D391, #48BB78);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #343A40;
     font-family: "Inter", sans-serif;
     margin-bottom: 2rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 /* Contenedor principal con mejor espaciado */
 .main-container {
     background-color: rgba(255,255,255,0.5);
-    border-radius: 24px;
+    border-radius: 16px;
     padding: 2rem;
     margin: 1rem;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.8);
+    border: 1px solid #E9ECEF;
 }
 
 /* Badges y etiquetas */
 .badge {
-    background: linear-gradient(135deg, #7ED321, #6BB91A);
+    background: linear-gradient(135deg, #6C757D, #495057);
     color: white;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 600;
-    box-shadow: 0 2px 8px rgba(126, 211, 33, 0.3);
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.2);
 }
 
 /* Mejoras adicionales para elementos de formulario */
@@ -165,7 +155,7 @@ button[kind="secondary"]:hover {
 
 label {
     font-weight: 600;
-    color: #2D3748;
+    color: #495057;
     margin-bottom: 0.5rem;
     display: block;
 }
@@ -174,9 +164,9 @@ label {
 .glass-card {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
-    border-radius: 20px;
+    border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 /* Animaciones sutiles */
@@ -193,4 +183,11 @@ label {
 
 .fade-in-up {
     animation: fadeInUp 0.6s ease-out;
+}
+
+/* Línea separadora sutil */
+.separator-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #DEE2E6, transparent);
+    margin: 2rem 0;
 }
